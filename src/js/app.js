@@ -29,8 +29,12 @@ socket.on('add_message', msg => {
   if (!document.hasFocus())
     appRef.unread = true;
   appRef.messages.push(msg);
-  document.querySelector('textarea').value = '';
-  document.querySelector('textarea').focus();
+  if (appRef.user_id === msg.from)
+  {
+    document.querySelector('textarea').value = '';
+    document.querySelector('textarea').focus();
+  }
+
   setTimeout(() =>
     document.querySelector('.message-box').scrollTop = document.querySelector('.message-box').scrollHeight, 50);
 });
