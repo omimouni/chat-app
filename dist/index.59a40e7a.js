@@ -591,14 +591,12 @@ window.addEventListener("focus", (e)=>{
     appRef.unread = false;
 });
 const appRef = (0, _alpinejsDefault.default).store("app");
-const socket = (0, _socketIoClient.io)("http://localhost:3000", {
+// const socket = io("http://localhost:3000", {transports: ['websocket', 'polling', 'flashsocket']});
+const socket = (0, _socketIoClient.io)("https://ff-xxxd.onrender.com/", {
     transports: [
-        "websocket",
-        "polling",
-        "flashsocket"
+        "websocket"
     ]
 });
-// const socket = io("https://ff-xxxd.onrender.com/", { transports: ['websocket'] });
 socket.on("user_id", (id)=>appRef.user_id = id);
 socket.on("users_list", (list)=>appRef.users_list = list);
 socket.on("room_id", (list)=>{
