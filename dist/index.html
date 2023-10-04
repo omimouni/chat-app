@@ -22,7 +22,12 @@
       <span><span x-text="$store.app.users_list.length"></span> online strangers users!</span>
     </div>
     <div class="h-full overflow-hidden bg-white shadow ">
-      <div class="h-full overflow-scroll message-box">
+      <div class="relative h-full overflow-y-scroll message-box">
+
+        <template x-if="$store.app.is_typing">
+          <div class="absolute px-2 py-2 text-sm text-white -translate-y-1/2 bg-yellow-800 bottom-2 left-1/2 opacity-40">Stranger is typing ...</div>
+        </template>
+        
         <template x-if="$store.app.room == null">
           <div class="py-4 italic text-center opacity-40">waiting for a match ...</div>
         </template>
@@ -51,6 +56,8 @@
           </div>
         </template>
       </div>
+
+
 
     </div>
     <div class="h-[5rem] gap-3 flex w-full">
