@@ -4,70 +4,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <template x-if="$store.app.unread">
-    <title>NEW MESSAGE | Chat</title>
-  </template>
-  <template x-if="!$store.app.unread">
-    <title>Chat</title>
-  </template>
+  <title>Anonfriends</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap"
+    rel="stylesheet">
 </head>
 
-<body>
+<body class="">
+  <div class="container px-2 m-auto md:w-9/12">
+    <div class="flex flex-col h-screen overflow-hidden">
+      <div class=" border-b-2 border-[#9b59b6]">
+        <div class="flex items-center justify-between h-[3rem]">
+          <div class="font-bold text-[#593368]">
+            <span x-text="$store.app.users.length"></span> Strangers online
+          </div>
+          <div class="text-xs">
+            <h3 class="font-bold">(Alpha version)</h3>
+            Give me your feedback <a target="_blank" href="https://x.com/oumarmimouni">@oumarmimouni</a>
+          </div>
+        </div>
+      </div>
+      <div class="h-full py-5 space-y-2 overflow-y-auto">
 
-  <div  class="flex flex-col h-screen gap-3 p-3 bg-gray-100">
-    <div class="p-2 text-xs bg-yellow-300">this is an alpha version.</div>
-
-    <div class="p-2 text-xs ">
-      <span><span x-text="$store.app.users_list.length"></span> online strangers users!</span>
-    </div>
-    <div class="h-full overflow-hidden bg-white shadow " >
-      <div class="relative h-full overflow-y-scroll message-box">
-
-        <template x-if="$store.app.is_typing">
-          <div class="absolute px-2 py-2 text-sm text-white -translate-y-1/2 bg-yellow-800 bottom-2 left-1/2 opacity-40">Stranger is typing ...</div>
-        </template>
-        
-        <template x-if="$store.app.room == null">
-          <div class="py-4 italic text-center opacity-40">waiting for a match ...</div>
-        </template>
-
-        <template x-if="$store.app.messages.length == 0 && $store.app.room !== null">
-          <div class="p-2 text-xs text-left opacity-40">Matched with a stranger ... Say hello!</div>
-        </template>
-
-        <template x-for="message in $store.app.messages">
+        <template x-for="msg in $store.app.messages">
           <div>
-            <template x-if="message.from == $store.app.user_id">
-              <div class="flex flex-row-reverse gap-2 p-2">
-                <h4 class="h-8 bg-gray-200 rounded-full aspect-square"></h4>
-                <p class="max-w-[80%] md:max-w-[30%] bg-gray-100 p-2 rounded-md text-sm" x-text="message.message">
-                </p>
+            <template x-if="$store.app.user_id !== msg.from">
+
+              <div class="flex gap-3">
+                <div class="h-6 aspect-square">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="fill-[#593368]" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                      d="M10.388 3.25h3.224c1.085 0 1.966 0 2.675.085.74.088 1.374.276 1.928.71.555.432.892 1.002 1.157 1.698.254.667.467 1.522.73 2.574l.484 1.933H22a.75.75 0 0 1 0 1.5h-1.984a.88.88 0 0 1-.033 0H4.017a.88.88 0 0 1-.033 0H2a.75.75 0 0 1 0-1.5h1.414l.484-1.933c.263-1.052.476-1.907.73-2.574.266-.696.602-1.266 1.157-1.699.554-.433 1.189-.62 1.928-.71.709-.084 1.59-.084 2.675-.084Zm-5.427 7h14.078l-.38-1.523c-.278-1.11-.47-1.877-.69-2.45-.21-.555-.418-.848-.677-1.05-.259-.203-.594-.332-1.183-.403-.61-.073-1.4-.074-2.544-.074h-3.13c-1.144 0-1.935.001-2.544.074-.59.07-.924.2-1.183.403-.26.202-.466.495-.678 1.05-.218.573-.411 1.34-.689 2.45l-.38 1.523Zm1.539 4.5a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5ZM2.25 17.5a4.25 4.25 0 0 1 8.35-1.125 3.75 3.75 0 0 1 2.8 0 4.252 4.252 0 0 1 8.35 1.125 4.25 4.25 0 0 1-8.474.477l-.27-.135a2.25 2.25 0 0 0-2.012 0l-.27.135A4.25 4.25 0 0 1 2.25 17.5Zm15.25-2.75a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="bg-[#f7e5ff] p-2 px-4 max-w-[60%] md:max-w-[30rem]">
+                  <h4 class="text-xs text-[#593368] font-bold">Stranger</h4>
+                  <p class="mt-1 text-sm" x-text="msg.msg">
+                  </p>
+                </div>
               </div>
             </template>
 
-            <template x-if="message.from !== $store.app.user_id">
-              <div class="flex gap-2 p-2">
-                <h4 class="h-8 bg-gray-200 rounded-full aspect-square"></h4>
-                <p class="max-w-[80%] md:max-w-[30%] bg-blue-100 p-2 rounded-md text-sm" x-text="message.message">
-                </p>
+            <template x-if="$store.app.user_id === msg.from">
+              <div class="flex flex-row-reverse gap-3">
+                <div class="h-6 aspect-square">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="fill-[#2980b9]" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                      d="M10.388 3.25h3.224c1.085 0 1.966 0 2.675.085.74.088 1.374.276 1.928.71.555.432.892 1.002 1.157 1.698.254.667.467 1.522.73 2.574l.484 1.933H22a.75.75 0 0 1 0 1.5h-1.984a.88.88 0 0 1-.033 0H4.017a.88.88 0 0 1-.033 0H2a.75.75 0 0 1 0-1.5h1.414l.484-1.933c.263-1.052.476-1.907.73-2.574.266-.696.602-1.266 1.157-1.699.554-.433 1.189-.62 1.928-.71.709-.084 1.59-.084 2.675-.084Zm-5.427 7h14.078l-.38-1.523c-.278-1.11-.47-1.877-.69-2.45-.21-.555-.418-.848-.677-1.05-.259-.203-.594-.332-1.183-.403-.61-.073-1.4-.074-2.544-.074h-3.13c-1.144 0-1.935.001-2.544.074-.59.07-.924.2-1.183.403-.26.202-.466.495-.678 1.05-.218.573-.411 1.34-.689 2.45l-.38 1.523Zm1.539 4.5a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5ZM2.25 17.5a4.25 4.25 0 0 1 8.35-1.125 3.75 3.75 0 0 1 2.8 0 4.252 4.252 0 0 1 8.35 1.125 4.25 4.25 0 0 1-8.474.477l-.27-.135a2.25 2.25 0 0 0-2.012 0l-.27.135A4.25 4.25 0 0 1 2.25 17.5Zm15.25-2.75a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="bg-[#f1f1f1] p-2 px-4 max-w-[60%] md:max-w-[30rem]">
+                  <p class="mt-1 text-sm" x-text="msg.msg">
+                    
+                  </p>
+                </div>
               </div>
             </template>
           </div>
         </template>
+
+
+
+
+        <template x-if="$store.app.is_typing">
+          <div class="flex gap-3">
+            <div class="h-6 aspect-square">
+              <svg xmlns="http://www.w3.org/2000/svg" class="fill-[#593368]" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                  d="M10.388 3.25h3.224c1.085 0 1.966 0 2.675.085.74.088 1.374.276 1.928.71.555.432.892 1.002 1.157 1.698.254.667.467 1.522.73 2.574l.484 1.933H22a.75.75 0 0 1 0 1.5h-1.984a.88.88 0 0 1-.033 0H4.017a.88.88 0 0 1-.033 0H2a.75.75 0 0 1 0-1.5h1.414l.484-1.933c.263-1.052.476-1.907.73-2.574.266-.696.602-1.266 1.157-1.699.554-.433 1.189-.62 1.928-.71.709-.084 1.59-.084 2.675-.084Zm-5.427 7h14.078l-.38-1.523c-.278-1.11-.47-1.877-.69-2.45-.21-.555-.418-.848-.677-1.05-.259-.203-.594-.332-1.183-.403-.61-.073-1.4-.074-2.544-.074h-3.13c-1.144 0-1.935.001-2.544.074-.59.07-.924.2-1.183.403-.26.202-.466.495-.678 1.05-.218.573-.411 1.34-.689 2.45l-.38 1.523Zm1.539 4.5a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5ZM2.25 17.5a4.25 4.25 0 0 1 8.35-1.125 3.75 3.75 0 0 1 2.8 0 4.252 4.252 0 0 1 8.35 1.125 4.25 4.25 0 0 1-8.474.477l-.27-.135a2.25 2.25 0 0 0-2.012 0l-.27.135A4.25 4.25 0 0 1 2.25 17.5Zm15.25-2.75a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class=" p-2 px-4 max-w-[60%] md:max-w-[30rem]">
+              <p class="mt-1 text-[#593368] italic text-sm">
+                Typing ...
+              </p>
+            </div>
+          </div>
+        </template>
+
       </div>
+      <div class="flex w-full h-[5rem] border-4 border-[#593368] overflow-hidden">
+        <div class="w-full">
+          <input id="textbox" :disabled="$store.app.room == null" placeholder="Start typing .."
+            class="w-full h-full p-2 text-sm outline-none resize-none disabled:bg-gray-200"/>
+        </div>
 
-
-
-    </div>
-    <div class="h-[5rem] gap-3 flex w-full">
-      <textarea name="" placeholder="Type something" :disabled="$store.app.room === null"
-        class="w-full h-full p-3 shadow outline-none resize-none" id="" cols="30" rows="10"></textarea>
-      <button class="w-32 text-white bg-blue-500 shadow send disabled:opacity-70"
-        :disabled="$store.app.room === null">send</button>
+        <div id="send"
+          class="w-1/3 md:w-1/4 text-xs text-white bg-[#593368] flex justify-center items-center flex-col cursor-pointer duration-500 hover:bg-[#472853]">
+          <span class="font-bold">Send</span>
+          <span class="opacity-50">(press enter)</span>
+        </div>
+      </div>
     </div>
   </div>
-  <script type="module" src="./js/app.js"></script>
+
+  <audio id="notif">
+    <source src="./out-of-nowhere-message-tone.ogg" type="audio/ogg">
+  </audio>
+  <audio id="new_chat">
+    <source src="./pristine-609.ogg" type="audio/ogg">
+  </audio>
+  <script type="module" src="./js/app2.js"></script>
 </body>
 
 </html>

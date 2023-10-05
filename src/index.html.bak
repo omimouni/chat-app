@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" x-data="">
+<html lang="en" x-data>
 
-<head><script src="/index2.1e05779a.js"></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <template x-if="$store.app.unread">
@@ -10,7 +10,7 @@
   <template x-if="!$store.app.unread">
     <title x-text="'chat (' +$store.app.users_list.length+ ')'"></title>
   </template>
-  <link rel="stylesheet" href="/index.c92073ef.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -25,7 +25,8 @@
       <div class="relative h-full overflow-y-scroll message-box">
 
         <template x-if="$store.app.is_typing">
-          <div class="absolute px-2 py-2 text-sm text-white -translate-y-1/2 bg-yellow-800 bottom-2 left-1/2 opacity-40">
+          <div
+            class="absolute px-2 py-2 text-sm text-white -translate-y-1/2 bg-yellow-800 bottom-2 left-1/2 opacity-40">
             Stranger is typing ...</div>
         </template>
 
@@ -62,11 +63,13 @@
 
     </div>
     <div class="h-[5rem] gap-3 flex w-full">
-      <textarea name="" placeholder="Type something" :disabled="$store.app.room === null" class="w-full h-full p-3 shadow outline-none resize-none" id="" cols="30" rows="10"></textarea>
-      <button class="w-32 text-white bg-blue-500 shadow send disabled:opacity-70" :disabled="$store.app.room === null">send</button>
+      <textarea name="" placeholder="Type something" :disabled="$store.app.room === null"
+        class="w-full h-full p-3 shadow outline-none resize-none" id="" cols="30" rows="10"></textarea>
+      <button class="w-32 text-white bg-blue-500 shadow send disabled:opacity-70"
+        :disabled="$store.app.room === null">send</button>
     </div>
   </div>
-  <script src="/index.59a40e7a.js" defer=""></script>
+  <script type="module" src="./js/app.js"></script>
 </body>
 
 </html>

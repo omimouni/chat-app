@@ -10,14 +10,15 @@ Alpine.store('app', {
   is_typing: false,
 });
 
+
 Alpine.start();
 
 window.addEventListener('focus', e => {
   appRef.unread = false;
 });
 const appRef = Alpine.store('app');
-// const socket = io("http://localhost:3000", {transports: ['websocket', 'polling', 'flashsocket']});
-const socket = io("https://ff-xxxd.onrender.com/", { transports: ['websocket'] });
+const socket = io("http://localhost:3000", {transports: ['websocket', 'polling', 'flashsocket']});
+// const socket = io("https://ff-xxxd.onrender.com/", { transports: ['websocket'] });
 
 socket.on('user_id', id => appRef.user_id = id);
 socket.on('users_list', list => appRef.users_list = list);

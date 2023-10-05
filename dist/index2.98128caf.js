@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"8UT0b":[function(require,module,exports) {
+})({"dE1oO":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "d7fe96c059a40e7a";
+module.bundle.HMR_BUNDLE_ID = "58a9ae7d98128caf";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -573,23 +573,20 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"8lRBv":[function(require,module,exports) {
+},{}],"iKN9E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _socketIoClient = require("socket.io-client");
 var _alpinejs = require("alpinejs");
 var _alpinejsDefault = parcelHelpers.interopDefault(_alpinejs);
+var _socketIoClient = require("socket.io-client");
 (0, _alpinejsDefault.default).store("app", {
+    current_page: true,
     user_id: null,
-    users_list: [],
     room: null,
-    unread: false,
+    users: [],
     messages: [],
     is_typing: false
 });
 (0, _alpinejsDefault.default).start();
-window.addEventListener("focus", (e)=>{
-    appRef.unread = false;
-});
 const appRef = (0, _alpinejsDefault.default).store("app");
 const socket = (0, _socketIoClient.io)("http://localhost:3000", {
     transports: [
@@ -598,57 +595,50 @@ const socket = (0, _socketIoClient.io)("http://localhost:3000", {
         "flashsocket"
     ]
 });
-// const socket = io("https://ff-xxxd.onrender.com/", { transports: ['websocket'] });
+// 
+const sendbtn = document.querySelector("#send");
+const textbox = document.querySelector("#textbox");
+window.addEventListener("focus", (_)=>{
+    textbox.focus();
+});
 socket.on("user_id", (id)=>appRef.user_id = id);
-socket.on("users_list", (list)=>appRef.users_list = list);
-socket.on("room_id", (list)=>{
-    if (list === null) appRef.messages = [];
-    appRef.room = list;
-    appRef.is_typing = false;
+socket.on("users_list", (list)=>appRef.users = list);
+socket.on("room_id", (id)=>{
+    appRef.room = id;
+    appRef.messages = [];
 });
-socket.on("add_message", (msg)=>{
-    if (!document.hasFocus()) appRef.unread = true;
-    appRef.messages.push(msg);
-    if (appRef.user_id === msg.from) {
-        document.querySelector("textarea").value = "";
-        document.querySelector("textarea").focus();
-    } else appRef.is_typing = false;
-    setTimeout(()=>document.querySelector(".message-box").scrollTop = document.querySelector(".message-box").scrollHeight, 50);
-});
-socket.on("typind_send", (msg)=>{
-    if (msg.from !== appRef.user_id) appRef.is_typing = msg.payload;
-});
-document.querySelector("textarea").addEventListener("keydown", (e)=>{
-    socket.emit("typing", {
+textbox.addEventListener("keydown", (0, _alpinejsDefault.default).debounce((e)=>socket.emit("typing_event", {
         from: appRef.user_id,
         room: appRef.room,
         payload: true
-    });
-});
-document.addEventListener("keyup", (e)=>{
-    socket.emit("typing", {
+    }), 300));
+textbox.addEventListener("keyup", (0, _alpinejsDefault.default).debounce((e)=>socket.emit("typing_event", {
         from: appRef.user_id,
         room: appRef.room,
         payload: false
-    });
+    }), 1000));
+socket.on("typing_update", (payload)=>{
+    console.log("payload", payload);
+    appRef.is_typing = payload;
 });
 document.addEventListener("keydown", (e)=>{
-    if (document.querySelector("textarea").value.trim() != "") {
-        if (e.key == "Enter") socket.emit("send_message", {
-            message: document.querySelector("textarea").value,
+    if (e.key == "Enter") {
+        let msg = textbox.value.trim();
+        if (msg.value != "") socket.emit("message_send", {
             from: appRef.user_id,
-            room: appRef.room
+            room: appRef.room,
+            msg: msg
         });
+        textbox.value = "";
     }
 });
-document.querySelector(".send").addEventListener("click", (_)=>{
-    if (document.querySelector("textarea").value.trim() != "") socket.emit("send_message", {
-        message: document.querySelector("textarea").value,
-        from: appRef.user_id,
-        room: appRef.room
-    });
+socket.on("message_add", (e)=>{
+    appRef.messages.push(e);
+});
+socket.on("message_notif", (_)=>{
+    document.querySelector("#notif").play();
 });
 
-},{"socket.io-client":"8HBJR","alpinejs":"69hXP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8UT0b","8lRBv"], "8lRBv", "parcelRequire10c2")
+},{"alpinejs":"69hXP","socket.io-client":"8HBJR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["dE1oO","iKN9E"], "iKN9E", "parcelRequire10c2")
 
-//# sourceMappingURL=index.59a40e7a.js.map
+//# sourceMappingURL=index2.98128caf.js.map

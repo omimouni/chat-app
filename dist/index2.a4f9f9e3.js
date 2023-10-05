@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"8UT0b":[function(require,module,exports) {
+})({"7u12m":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "d7fe96c059a40e7a";
+module.bundle.HMR_BUNDLE_ID = "007a1e5ba4f9f9e3";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -573,82 +573,8 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"8lRBv":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _socketIoClient = require("socket.io-client");
-var _alpinejs = require("alpinejs");
-var _alpinejsDefault = parcelHelpers.interopDefault(_alpinejs);
-(0, _alpinejsDefault.default).store("app", {
-    user_id: null,
-    users_list: [],
-    room: null,
-    unread: false,
-    messages: [],
-    is_typing: false
-});
-(0, _alpinejsDefault.default).start();
-window.addEventListener("focus", (e)=>{
-    appRef.unread = false;
-});
-const appRef = (0, _alpinejsDefault.default).store("app");
-const socket = (0, _socketIoClient.io)("http://localhost:3000", {
-    transports: [
-        "websocket",
-        "polling",
-        "flashsocket"
-    ]
-});
-// const socket = io("https://ff-xxxd.onrender.com/", { transports: ['websocket'] });
-socket.on("user_id", (id)=>appRef.user_id = id);
-socket.on("users_list", (list)=>appRef.users_list = list);
-socket.on("room_id", (list)=>{
-    if (list === null) appRef.messages = [];
-    appRef.room = list;
-    appRef.is_typing = false;
-});
-socket.on("add_message", (msg)=>{
-    if (!document.hasFocus()) appRef.unread = true;
-    appRef.messages.push(msg);
-    if (appRef.user_id === msg.from) {
-        document.querySelector("textarea").value = "";
-        document.querySelector("textarea").focus();
-    } else appRef.is_typing = false;
-    setTimeout(()=>document.querySelector(".message-box").scrollTop = document.querySelector(".message-box").scrollHeight, 50);
-});
-socket.on("typind_send", (msg)=>{
-    if (msg.from !== appRef.user_id) appRef.is_typing = msg.payload;
-});
-document.querySelector("textarea").addEventListener("keydown", (e)=>{
-    socket.emit("typing", {
-        from: appRef.user_id,
-        room: appRef.room,
-        payload: true
-    });
-});
-document.addEventListener("keyup", (e)=>{
-    socket.emit("typing", {
-        from: appRef.user_id,
-        room: appRef.room,
-        payload: false
-    });
-});
-document.addEventListener("keydown", (e)=>{
-    if (document.querySelector("textarea").value.trim() != "") {
-        if (e.key == "Enter") socket.emit("send_message", {
-            message: document.querySelector("textarea").value,
-            from: appRef.user_id,
-            room: appRef.room
-        });
-    }
-});
-document.querySelector(".send").addEventListener("click", (_)=>{
-    if (document.querySelector("textarea").value.trim() != "") socket.emit("send_message", {
-        message: document.querySelector("textarea").value,
-        from: appRef.user_id,
-        room: appRef.room
-    });
-});
+},{}],"aT7oV":[function(require,module,exports) {
 
-},{"socket.io-client":"8HBJR","alpinejs":"69hXP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8UT0b","8lRBv"], "8lRBv", "parcelRequire10c2")
+},{}]},["7u12m","aT7oV"], "aT7oV", "parcelRequire10c2")
 
-//# sourceMappingURL=index.59a40e7a.js.map
+//# sourceMappingURL=index2.a4f9f9e3.js.map
