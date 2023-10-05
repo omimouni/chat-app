@@ -13,7 +13,8 @@ Alpine.store('app', {
 Alpine.start();
 const appRef = Alpine.store('app');
 
-const socket = io("http://localhost:3000", {transports: ['websocket', 'polling', 'flashsocket']});
+// const socket = io("http://localhost:3000", {transports: ['websocket', 'polling', 'flashsocket']});
+const socket = io("https://ff-xxxd.onrender.com/", {transports: ['websocket', 'polling', 'flashsocket']});
 
 // 
 const sendbtn = document.querySelector("#send");
